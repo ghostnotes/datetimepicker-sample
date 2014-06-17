@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">DateTimePicker Sample</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="button_date">DATE</string>
+    <string name="button_time">TIME</string>
     <string name="action_settings">Settings</string>
 
 </resources>
