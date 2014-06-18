@@ -9,14 +9,18 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.sleepbot.datetimepicker.time.RadialPickerLayout;
+import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import java.lang.Override;
 import java.util.Calendar;
 
 
-public class MainActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
-    private static final String TAG_DATEPICKERDIALOG = "TAG_DATEPICKERDIALOG";
-    private static final int YEAR_RANGE_FROM = 1985;
+public class MainActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private static final String TAG_DATE_PICKER_DIALOG = "TAG_DATE_PICKER_DIALOG";
+    private static final String TAG_TIME_PICKER_DIALOG = "TAG_TIME_PICKER_DIALOG";
+
+    private static final int YEAR_RANGE_FROM = 1977;
     private static final int YEAR_RANGE_TO = 2020;
 
     @Override
@@ -34,17 +38,33 @@ public class MainActivity extends ActionBarActivity implements DatePickerDialog.
             false
         );
 
+        final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(
+            MainActivity.this,
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            false,
+            false
+        );
+
         Button buttonDate = (Button) findViewById(R.id.button_date);
         buttonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePickerDialog.setVibrate(false);
                 datePickerDialog.setYearRange(YEAR_RANGE_FROM, YEAR_RANGE_TO);
-                datePickerDialog.show(getSupportFragmentManager(), TAG_DATEPICKERDIALOG);
+                datePickerDialog.show(getSupportFragmentManager(), TAG_DATE_PICKER_DIALOG);
+            }
+        });
+
+        Button buttonTime = (Button) findViewById(R.id.button_time);
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog.setVibrate(false);
+                timePickerDialog.show(getSupportFragmentManager(), TAG_TIME_PICKER_DIALOG);
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,5 +88,10 @@ public class MainActivity extends ActionBarActivity implements DatePickerDialog.
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
         Toast.makeText(MainActivity.this, year + "/" + (month + 1) + "/" + day, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout radialPickerLayout, int hourOfDay, int minute) {
+        Toast.makeText(MainActivity.this, hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
     }
 }
